@@ -20,10 +20,10 @@ class InvoiceFactory extends Factory
         $paid = $this->faker->boolean(50); // 50% chance of being paid
         return [
             'user_id' => User::all()->random()->id,
-            'type' => $this->faker->randomElement(['B', 'C', 'P']), 
+            'type' => $this->faker->randomElement(['B', 'C', 'P']),
             'paid' => $paid,
-            'value' => $this->faker->numberBetween(1000, 10000), 
-            'payment_date' => $paid ? $this->faker->randomElement([$this->faker->dataTimeThisMonth()]) : null,
+            'value' => $this->faker->numberBetween(1000, 10000),
+            'payment_date' => $paid ? $this->faker->randomElement([$this->faker->dateTimeThisMonth()]) : null,
         ];
     }
 }
