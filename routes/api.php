@@ -14,8 +14,10 @@ Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{user}', [UserController::class, 'show']);
 
 
-Route::get('/invoices', [InvoiceController::class, 'index']);
-Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
-Route::post('/invoices', [InvoiceController::class, 'store']);
-Route::put('/invoices/{invoice}', [InvoiceController::class, 'update']);
-Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy']);
+//essa linha substitui todas as rotas abaixo dela
+Route::apiResource('invoices', InvoiceController::class);
+// Route::get('/invoices', [InvoiceController::class, 'index']);
+// Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
+// Route::post('/invoices', [InvoiceController::class, 'store']);
+// Route::put('/invoices/{invoice}', [InvoiceController::class, 'update']);
+// Route::delete('/invoices/{invoice}', [InvoiceController::class, 'destroy']);
