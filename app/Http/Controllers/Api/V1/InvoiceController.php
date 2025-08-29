@@ -50,9 +50,9 @@ class InvoiceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Invoice $invoice)
     {
-        //
+        return new InvoiceResource($invoice);
     }
 
     /**
@@ -60,14 +60,42 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'type' => 'required|in:C,B,P',
+            'value' => 'required|numeric|min:0',
+            'paid' => 'required|boolean',
+            'payment_date' => 'nullable|date',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors(), 'Ocorreu um erro de validação.', 422);
+        }
+
+        $invoice = Invoice::find($id);
+
+        if (!$invoice) {
+            return $this->error(null, 'Fatura não encontrada.', 404);
+        }
+
+        $updated = $invoice->update($validator->validated());
+
+        if($updated) {
+            return $this->success($invoice, 'Fatura atualizada.', 200);
+        }
+        return $this->error(null, 'Ocorreu um erro ao atualizar a fatura.', 400);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Invoice $invoice)
     {
-        //
+        $invoice->delete();
+        
+        if($invoice) {
+            return $this->success(null, 'Fatura deletada.', 200);
+        }
+        return $this->error(null, 'Ocorreu um erro ao deletar a fatura.', 400);
     }
 }
