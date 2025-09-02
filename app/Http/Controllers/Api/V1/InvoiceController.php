@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\InvoiceResource;
-use App\Http\Traits\HttpResponses as TraitsHttpResponses;
+use App\Http\Traits\HttpResponses;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -15,7 +15,7 @@ class InvoiceController extends Controller
      * Display a listing of the resource.
      */
 
-    use TraitsHttpResponses;
+    use HttpResponses;
 
     public function index(Request $request)
     {
