@@ -32,6 +32,11 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (!auth()->user()->tokenCan('invoice-store')) {
+            return $this->error(null, 'Acesso negado.', 403);
+        }
+
         $validator = Validator::make($request->all(), [
             'user_id' => 'required',
             'type' => 'required|in:C,B,P',

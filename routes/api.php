@@ -18,7 +18,8 @@ Route::get('/users/{user}', [UserController::class, 'show']);
 
 
 //essa linha substitui todas as rotas abaixo dela
-Route::apiResource('invoices', InvoiceController::class)->middleware('auth:sanctum')->only(['store', 'update']);
+Route::apiResource('invoices', InvoiceController::class)
+->middleware(['auth:sanctum', 'ability:invoice-store,user-update'])->only(['store', 'update']);
 // Route::get('/invoices', [InvoiceController::class, 'index']);
 // Route::get('/invoices/{invoice}', [InvoiceController::class, 'show']);
 // Route::post('/invoices', [InvoiceController::class, 'store']);
@@ -31,6 +32,6 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/teste', [TesteController::class, 'index']);
-    Route::get('/users/{user}', [UserController::class, 'show']);
+    Route::get('/teste', [TesteController::class, 'index'])->middleware('ability:teste-index');
+    Route::get('/users/{user}', [UserController::class, 'show'])->middleware('ability:user-get');
 });

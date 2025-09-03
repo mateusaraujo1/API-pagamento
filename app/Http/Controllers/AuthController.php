@@ -17,7 +17,7 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             return $this->success(
                 [
-                    'token' => $request->user()->createToken('API Token')
+                    'token' => $request->user()->createToken('invoice', ['invoice-store'])->plainTextToken
                 ], 'Authorized', 200);
         }
         
